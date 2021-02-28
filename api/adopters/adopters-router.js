@@ -1,14 +1,8 @@
 const express = require('express');
 
-const Adopter = require('./adopters-model');
+const AdopterMongo = require('./adopters-mongo-model');
 
 const router = express.Router();
-
-const pureFunction = (a) => a + 2;
-pureFunction(5); // 7
-
-const impureFunction = (a) => a + Math.random();
-impureFunction(5); // ???
 
 // PERFORM SORTING
 // /api/adopters
@@ -17,7 +11,7 @@ router.get('/', (req, res) => {
     return res.json({ msg: 'Mihai salut' });
   }
 
-  Adopter.find(req.query)
+  AdopterMongo.find(req.query)
     .then((adopters) => {
       res.status(200).json(adopters);
     })
@@ -30,10 +24,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  Adopter.findById(req.params.id)
+  AdopterMongo.findById(req.params.id)
     .then((adopter) => {
       if (adopter) {
-        res.status(200).json({ adopter, query: req.query });
+        res.status(200).json(adopter);
       } else {
         res.status(404).json({ message: 'Adopter not found' });
       }
@@ -47,7 +41,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/:id/dogs', (req, res) => {
-  Adopter.findDogs(req.params.id)
+  AdopterMongo.findDogs(req.params.id)
     .then((dogs) => {
       if (dogs.length > 0) {
         res.status(200).json(dogs);
@@ -67,7 +61,7 @@ router.post('/', (req, res) => {
   if (!req.body.email || !req.body.name) {
     res.status(400).json({ err: 'Name or email missing' });
   } else {
-    Adopter.add(req.body)
+    AdopterMongo.add(req.body)
       .then((adopter) => {
         res.status(201).json(adopter);
       })
@@ -84,7 +78,7 @@ router.post('/', (req, res) => {
 // /api/adopters/1
 router.delete('/:id', (req, res) => {
   // sterg din baza de date
-  Adopter.remove(req.params.id)
+  AdopterMongo.remove(req.params.id)
     .then((deletedAdopter) => {
       res.status(200).json({ deletedAdopter });
     })
@@ -99,7 +93,7 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const changedAdopter = req.body;
 
-  Adopter.update(req.params.id, changedAdopter)
+  AdopterMongo.update(req.params.id, changedAdopter)
     .then((updatedAdopter) => {
       res.status(200).json({ updatedAdopter });
     })
