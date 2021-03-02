@@ -1,6 +1,3 @@
-// BREAK UP THIS MONOLITHIC FILE USING ROUTES
-// BREAK UP THIS MONOLITHIC FILE USING ROUTES
-// BREAK UP THIS MONOLITHIC FILE USING ROUTES
 const express = require('express');
 const adoptersRouter = require('./adopters/adopters-router');
 
@@ -11,9 +8,6 @@ server.use('/api/adopters', adoptersRouter);
 
 const Dog = require('./dogs/dogs-model');
 
-// DOGS ENDPOINTS
-// DOGS ENDPOINTS
-// DOGS ENDPOINTS
 server.get('/api/dogs', (req, res) => {
   Dog.find()
     .then(dogs => {
@@ -27,9 +21,6 @@ server.get('/api/dogs', (req, res) => {
     });
 });
 
-// OTHER ENDPOINTS
-// OTHER ENDPOINTS
-// OTHER ENDPOINTS
 server.get('/', (req, res) => {
   res.send(`
     <h2>Lambda Shelter API</h>

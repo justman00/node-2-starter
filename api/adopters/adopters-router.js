@@ -4,14 +4,6 @@ const Adopter = require('./adopters-model');
 
 const router = express.Router();
 
-const pureFunction = (a) => a + 2;
-pureFunction(5); // 7
-
-const impureFunction = (a) => a + Math.random();
-impureFunction(5); // ???
-
-// PERFORM SORTING
-// /api/adopters
 router.get('/', (req, res) => {
   if (req.query.hello === 'world') {
     return res.json({ msg: 'Mihai salut' });
@@ -80,7 +72,6 @@ router.post('/', (req, res) => {
   }
 });
 
-// DELETE ADOPTER
 // /api/adopters/1
 router.delete('/:id', (req, res) => {
   // sterg din baza de date
@@ -94,8 +85,6 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-// UPDATE ADOPTER
-// PUT /api/adopters/1
 router.put('/:id', (req, res) => {
   const changedAdopter = req.body;
 
@@ -107,23 +96,5 @@ router.put('/:id', (req, res) => {
       res.status(500).json({ message: err });
     });
 });
-
-// PATCH
-
-// URL Structure
-// https://www.google.com
-// /search
-// ? -> inceputul la query string
-// q=stepit -> date
-// & - si
-// rlz=1C5CHFA_enMD912MD912&oq=stepit
-// &
-// aqs=chrome..69i57j46i175i199j0l2j69i60l3.897j0j7
-// &
-// sourceid=chrome&ie=UTF-8
-
-// https://github.com/search?q=hello+world
-// https://github.com/search?o=desc&q=hello+world&s=stars&type=Repositories
-// https://github.com/search?o=desc&p=2&q=hello+world&s=stars&type=Repositories
 
 module.exports = router;
